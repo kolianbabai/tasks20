@@ -6,7 +6,8 @@
     •
     Логика чтения/записи реализованная в методах save/load должна работать корректно в случае, если список assets пустой.
     •
-    Логика чтения/записи реализованная в методах save/load должна работать корректно в случае, если поле name и список assets не пустые.
+    Логика чтения/записи реализованная в методах save/load должна работать корректно в случае, если поле name и
+    список assets не пустые.
     •
     Класс Solution.Human не должен поддерживать интерфейс Serializable.
     •
@@ -28,7 +29,7 @@ public class Solution {
     public static void main(String[] args) {
         //исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
-            File your_file_name = File.createTempFile("your_file_name", null);
+            File your_file_name = File.createTempFile("/home/bns/001.txt", null);
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
@@ -39,7 +40,17 @@ public class Solution {
             Human somePerson = new Human();
             somePerson.load(inputStream);
             inputStream.close();
-            //check here that ivanov equals to somePerson - проверьте тут, что ivanov и somePerson равны
+
+            if(somePerson.equals(ivanov)){
+                System.out.println("Yes!");
+            }else{
+                System.out.println("No!");
+                System.out.println(somePerson.name);
+                for(Asset as: somePerson.assets){
+                    System.out.println(as.getName());
+                    System.out.println(as.getPrice());
+                }
+            }
 
         } catch (IOException e) {
             //e.printStackTrace();
@@ -83,11 +94,34 @@ public class Solution {
         }
 
         public void save(OutputStream outputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+            PrintWriter printWriter = new PrintWriter(outputStream);
+
+            if(name != null){
+                printWriter.println(name);
+            }
+            if(assets != null){
+                for(Asset a : assets){
+                    printWriter.println(a.getName());
+                    printWriter.println(a.getPrice());
+                }
+            }
+            printWriter.flush();
+            printWriter.close();
+
         }
 
         public void load(InputStream inputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+           BufferedReader buff = new BufferedReader(new InputStreamReader(inputStream));
+
+           name = buff.readLine();
+            if (assets != null) {
+
+                    assets.addAll(Arrays.asList(new Asset(buff.readLine(), Double.parseDouble(buff.readLine()))));
+                    assets.addAll(Arrays.asList(new Asset(buff.readLine(), Double.parseDouble(buff.readLine()))));
+
+            }
+
+            buff.close();
         }
     }
 }
