@@ -8,11 +8,9 @@
     •
     Логика чтения/записи реализованная в методах save/load должна работать корректно в случае, если поле name и список assets не пустые.
     •
-    Класс Solution.Human не должен поддерживать интерфейс Serializable.
+    Класс Solution.Human не должен поддерживать интерфейсы Serializable, Externalizable.
     •
     Класс Solution.Human должен быть публичным.
-    •
-    Класс Solution.Human не должен поддерживать интерфейс Externalizable.
 
 package com.javarush.task.task20.task2001;
 
@@ -22,6 +20,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /* 
+Читаем и пишем в файл: Human
+*/
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+/*
 Читаем и пишем в файл: Human
 */
 public class Solution {
@@ -39,7 +44,14 @@ public class Solution {
             Human somePerson = new Human();
             somePerson.load(inputStream);
             inputStream.close();
-            //check here that ivanov equals to somePerson - проверьте тут, что ivanov и somePerson равны
+
+            if(ivanov.equals(somePerson)){
+                System.out.println("yes");
+            }else{
+                System.out.println("No!");
+            }
+
+
 
         } catch (IOException e) {
             //e.printStackTrace();
@@ -83,11 +95,30 @@ public class Solution {
         }
 
         public void save(OutputStream outputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            if (name != null){
+                printWriter.println(name);
+            }
+            if(!assets.isEmpty()){
+                for(Asset ass : assets){
+                    printWriter.println(ass.getName());
+                    printWriter.println(ass.getPrice());
+                }
+            }
+            printWriter.flush();
+            printWriter.close();
         }
 
         public void load(InputStream inputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+            BufferedReader buff = new BufferedReader(new InputStreamReader(inputStream));
+            name = buff.readLine();
+            while (buff.ready()){
+                if(name == null) {break;}
+                assets.addAll(Arrays.asList(new Asset(buff.readLine(), Double.parseDouble(buff.readLine()))));
+            }
+
+            buff.close();
         }
     }
 }

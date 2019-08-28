@@ -17,9 +17,10 @@ package com.javarush.task.task20.task2002;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-/* 
+/*
 Читаем и пишем в файл: JavaRush
 */
 public class Solution {
@@ -32,13 +33,35 @@ public class Solution {
             InputStream inputStream = new FileInputStream(yourFile);
 
             JavaRush javaRush = new JavaRush();
-            //initialize users field for the javaRush object here - инициализируйте поле users для объекта javaRush тут
+            User user1 = new User();
+            user1.setFirstName("Ivanchenko");
+            user1.setLastName("Vladimir");
+            user1.setBirthDate(new Date());
+            user1.setMale(true);
+            user1.setCountry(User.Country.RUSSIA);
+
+            User user2 = new User();
+            user2.setFirstName("Ivanova");
+            user2.setLastName("Olya");
+            user2.setBirthDate(new Date());
+            user2.setMale(false);
+            user2.setCountry(User.Country.RUSSIA);
+
+            javaRush.users.add(user1);
+            javaRush.users.add(user2);
+
             javaRush.save(outputStream);
             outputStream.flush();
 
             JavaRush loadedObject = new JavaRush();
             loadedObject.load(inputStream);
-            //here check that the javaRush object is equal to the loadedObject object - проверьте тут, что javaRush и loadedObject равны
+
+            if(javaRush.equals(loadedObject)){
+                System.out.println("yes");
+            }else{
+                System.out.println("no");
+
+            }
 
             outputStream.close();
             inputStream.close();
@@ -56,11 +79,45 @@ public class Solution {
         public List<User> users = new ArrayList<>();
 
         public void save(OutputStream outputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+            PrintWriter printWriter = new PrintWriter(outputStream);
+
+            if(!users.isEmpty()){
+                    for(User us : users){
+                    printWriter.println(us.getFirstName());
+                    printWriter.println(us.getLastName());
+                    printWriter.println(us.getBirthDate().getTime());
+                    printWriter.println(us.isMale());
+                    printWriter.println(us.getCountry());
+                }
+            }
+            printWriter.flush();
+            printWriter.close();
         }
 
         public void load(InputStream inputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+            BufferedReader buff = new BufferedReader(new InputStreamReader(inputStream));
+
+
+            while (true){
+                User user   = new User();
+                String firstName = buff.readLine();
+                if(firstName == null){break;}
+
+                String lastName = buff.readLine();
+                Date date = new Date(Long.parseLong(buff.readLine()));
+                boolean sIsMale = Boolean.parseBoolean(buff.readLine());
+                User.Country country = User.Country.valueOf(buff.readLine());
+
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setBirthDate(date);
+                user.setMale(sIsMale);
+                user.setCountry(country);
+
+                users.add(user);
+            }
+
+            buff.close();
         }
 
         @Override
