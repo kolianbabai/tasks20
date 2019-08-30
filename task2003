@@ -19,45 +19,62 @@
 package com.javarush.task.task20.task2003;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
-/* 
+/*
 Знакомство с properties
 */
 public class Solution {
     public static Map<String, String> properties = new HashMap<>();
 
-    public void fillInPropertiesMap() {
-        //implement this method - реализуйте этот метод
+    public void fillInPropertiesMap() throws Exception {
+
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = buff.readLine();
+        FileInputStream fis = new FileInputStream(fileName);
+
+        load(fis);
+
+        buff.close();
+
     }
 
     public void save(OutputStream outputStream) throws Exception {
-        //implement this method - реализуйте этот метод
+        Properties prop = new Properties();
+
+        for (String name: prop.stringPropertyNames())
+            properties.put(name, prop.getProperty(name));
+
+        prop.store(outputStream, "создаю пропертя с мапой внутри");
     }
 
     public void load(InputStream inputStream) throws Exception {
-        //implement this method - реализуйте этот метод
+        Properties prop = new Properties();
+        prop.load(inputStream);
+
+        properties = new HashMap(prop);
+
+
     }
 
-     public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-                Properties prop = new Properties();
-                prop.put("two", "2");
-                prop.put("tw", "2");
-                prop.put("t", "ttt");
-
-                prop.putAll(properties);
-
-                FileOutputStream fileOutputStream = new FileOutputStream("new.properties");
-                prop.store(fileOutputStream, "");
-
-                for (String name: prop.stringPropertyNames())
-                    properties.put(name, prop.getProperty(name));
-
-
-
-                for(Map.Entry en: properties.entrySet()){
-
-                    System.out.println(en.getKey() + " " + en.getValue());
-                }
-        }
+//        Properties prop = new Properties();
+//
+//        prop.put("r", "RRR");
+//        prop.put("k", "KKK");
+//
+//
+//        for(String s: prop.stringPropertyNames()){
+//
+//            properties.put(s, prop.getProperty(s));
+//        }
+//
+//            for(Map.Entry en: properties.entrySet()){
+//
+//                System.out.println(en.getKey() + " " + en.getValue());
+//            }
+    }
 }

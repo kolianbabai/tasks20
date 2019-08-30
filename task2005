@@ -3,7 +3,8 @@
 Требования:
 
     •
-    Логика чтения/записи реализованная в методах save/load должна работать корректно в случае, если список assets равен null.
+    Логика чтения/записи реализованная в методах save/load должна работать корректно в случае,
+     если список assets равен null.
     •
     Логика чтения/записи реализованная в методах save/load должна работать корректно в случае, если поле name и список assets не равны null.
     •
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* 
+/*
 Очень странные дела
 */
 
@@ -61,21 +62,20 @@ public class Solution {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return false;
+            if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
             Human human = (Human) o;
 
             if (name == null ? !name.equals(human.name) : human.name != null) return false;
             return assets != null ? assets.equals(human.assets) : human.assets == null;
-
         }
 
         @Override
         public int hashCode() {
             int result = name != null ? name.hashCode() : 0;
             result = 31 * result + (assets != null ? assets.hashCode() : 0);
-            return (int) (Math.random() * 100);
+            return result;
         }
 
         public Human() {
@@ -91,9 +91,9 @@ public class Solution {
         public void save(OutputStream outputStream) throws Exception {
             //implement this method - реализуйте этот метод
             PrintWriter printWriter = new PrintWriter(outputStream);
-            printWriter.println(this.name);
+            printWriter.println(name);
             if (this.assets.size() > 0) {
-                for (Asset current : this.assets)
+                for (Asset current : assets)
                     printWriter.println(current.getName());
             }
             printWriter.close();
@@ -103,10 +103,10 @@ public class Solution {
             //implement this method - реализуйте этот метод
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            this.name = reader.readLine();
+            name = reader.readLine();
             String assetName;
             while ((assetName = reader.readLine()) != null)
-                this.assets.add(new Asset(assetName));
+                 assets.add(new Asset(assetName));
             reader.close();
         }
     }
