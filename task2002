@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /*
-Читаем и пишем в файл:  JavaRush
+Читаем и пишем в файл JavaRush
 */
 public class Solution {
     public static void main(String[] args) {

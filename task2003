@@ -43,7 +43,7 @@ public class Solution {
                 Properties prop = new Properties();
                 prop.put("two", "2");
                 prop.put("tw", "2");
-                prop.put("t", "2");
+                prop.put("t", "ttt");
 
                 prop.putAll(properties);
 
