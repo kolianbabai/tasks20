@@ -19,7 +19,7 @@ import java.util.List;
 /* 
 Как сериализовать?
 */
-public class Solution {
+public class Solution implements Serializable{
     public static class Human {
         public String name;
         public List<Asset> assets = new ArrayList<>();
