@@ -2,17 +2,19 @@
 Про .properties почитать тут - http://ru.wikipedia.org/wiki/.properties
 Реализуй логику записи в файл и чтения из файла для карты properties.
 Требования:
-
-    •
+   •
     Метод fillInPropertiesMap должен считывать данные с консоли.
     •
-    Метод fillInPropertiesMap должен создавать FileInputStream, передавая считанную строку в качестве параметра.
+    Метод fillInPropertiesMap должен создавать FileInputStream,
+    передавая считанную строку в качестве параметра.
     •
-    Метод fillInPropertiesMap должен вызывать метод load передавая только что созданный FileInputStream в качестве параметра.
+    Метод fillInPropertiesMap должен вызывать метод load передавая только
+    что созданный FileInputStream в качестве параметра.
     •
     Метод save должен сохранять карту properties в полученный в качестве параметра объект типа OutputStream.
     •
-    Метод load должен восстанавливать состояние карты properties из полученного в качестве параметра объекта типа InputStream.
+    Метод load должен восстанавливать состояние карты properties из полученного в качестве параметра объекта
+    типа InputStream.
 
 package com.javarush.task.task20.task2003;
 
@@ -36,7 +38,26 @@ public class Solution {
         //implement this method - реализуйте этот метод
     }
 
-    public static void main(String[] args) {
+     public static void main(String[] args) throws IOException {
 
-    }
+                Properties prop = new Properties();
+                prop.put("two", "2");
+                prop.put("tw", "2");
+                prop.put("t", "2");
+
+                prop.putAll(properties);
+
+                FileOutputStream fileOutputStream = new FileOutputStream("new.properties");
+                prop.store(fileOutputStream, "");
+
+                for (String name: prop.stringPropertyNames())
+                    properties.put(name, prop.getProperty(name));
+
+
+
+                for(Map.Entry en: properties.entrySet()){
+
+                    System.out.println(en.getKey() + " " + en.getValue());
+                }
+        }
 }

@@ -113,8 +113,9 @@ public class Solution {
         public void load(InputStream inputStream) throws Exception {
             BufferedReader buff = new BufferedReader(new InputStreamReader(inputStream));
             name = buff.readLine();
+            if(name == null) {break;}
             while (buff.ready()){
-                if(name == null) {break;}
+
                 assets.addAll(Arrays.asList(new Asset(buff.readLine(), Double.parseDouble(buff.readLine()))));
             }
 
