@@ -1,5 +1,6 @@
 На вход подается поток, в который записан сериализованный объект класса A либо класса B.
-Десериализуй объект в методе getOriginalObject так, чтобы в случае возникновения исключения было выведено сообщение на экран и возвращен null.
+Десериализуй объект в методе getOriginalObject так, чтобы в случае возникновения исключения было выведено сообщение
+на экран и возвращен null.
 Реализуй интерфейс Serializable где необходимо.
 Требования:
 
@@ -25,10 +26,19 @@ import java.io.ObjectInputStream;
 */
 public class Solution {
     public A getOriginalObject(ObjectInputStream objectStream) {
-        return null;
+
+        Object object;
+        try {
+            object = objectStream.readObject();
+            if (!object.getClass().equals(A.class)) {
+                return null;
+            } else return (A) object;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public class A {
+    public class A implements Serializable {
     }
 
     public class B extends A {

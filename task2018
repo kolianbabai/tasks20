@@ -27,7 +27,7 @@ package com.javarush.task.task20.task2018;
 import java.io.Serializable;
 
 /* 
-Найти ошибки
+Найти ошибки НЕ РАБОТАЕТ(((
 */
 public class Solution {
     public static class A {
@@ -37,6 +37,7 @@ public class Solution {
         public A(String nameA) {
             this.nameA += nameA;
         }
+
     }
 
     public class B extends A implements Serializable {
@@ -47,6 +48,19 @@ public class Solution {
             super(nameA);
             this.nameA += nameA;
             this.nameB = nameB;
+        }
+
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeObject(nameA);
+            out.writeObject(nameB);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            this.nameA = (String) in.readObject();
+            this.nameB = (String) in.readObject();
         }
     }
 

@@ -20,7 +20,8 @@
     •
     В методе readObject(ObjectInputStream in) поле stream должно быть инициализировано новым объектом типа FileOutputStream с параметрами(fileName, true).
     •
-    В конструкторе класса Solution поле stream должно быть инициализировано новым объектом типа FileOutputStream с параметром(fileName).
+    В конструкторе класса Solution поле stream должно быть инициализировано новым объектом типа FileOutputStream с
+    параметром(fileName).
 
 package com.javarush.task.task20.task2022;
 
