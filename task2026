@@ -47,3 +47,52 @@ public class Solution {
         return 0;
     }
 }
+
+
+
+/////////////////////////////////////////////////
+public class Solution {
+    public static void main(String[] args) {
+        byte[][] a1 = new byte[][]{
+                {1, 1, 0, 0},
+                {1, 1, 0, 0},
+                {1, 1, 0, 0},
+                {1, 1, 0, 1},
+                {1, 1, 0, 0},
+        };
+        byte[][] a2 = new byte[][]{
+                {1, 0, 0, 1},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {1, 0, 0, 1}
+        };
+
+        byte[][] a3 = new byte[][]{
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 0, 0, 0},
+                {1, 0, 0, 1}
+        };
+
+
+        int count1 = getRectangleCount(a1);
+        System.out.println("count = " + count1 + ". Должно быть 2" + " " + a1.length + " " + a1[0].length);
+        int count2 = getRectangleCount(a2);
+        System.out.println("count = " + count2 + ". Должно быть 4");
+        int count3 = getRectangleCount(a3);
+        System.out.println("count = " + count3 + ". Должно быть 3");
+
+        for (int i = 0; i < a1.length ; i++) {
+            for (int j = 0; j < a1[0].length ; j++) {
+                System.out.print(a1[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static int getRectangleCount(byte[][] a) {
+
+        return 0;
+    }
+}
+
