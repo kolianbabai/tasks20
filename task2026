@@ -96,3 +96,120 @@ public class Solution {
     }
 }
 
+//////////////////
+
+/*
+Алгоритмы-прямоугольники
+*/
+public class Solution {
+    public static void main(String[] args) {
+        byte[][] a1 = new byte[][]{
+                {1, 1, 0, 0},
+                {1, 1, 0, 0},
+                {1, 1, 0, 0},
+                {1, 1, 0, 1}
+        };
+        byte[][] a2 = new byte[][]{
+                {1, 0, 0, 1},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {1, 0, 1, 1}
+        };
+
+        byte[][] a3 = new byte[][]{
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 0, 0, 0},
+                {1, 0, 0, 1}
+        };
+
+
+        int count1 = getRectangleCount(a1);
+        System.out.println("count = " + count1 + ". Должно быть 2");
+        int count2 = getRectangleCount(a2);
+        System.out.println("count = " + count2 + ". Должно быть 4");
+        int count3 = getRectangleCount(a3);
+        System.out.println("count = " + count3 + ". Должно быть 3");
+
+
+    }
+
+    public static int getRectangleCount(byte[][] a) {
+        int count = 0;
+
+        for (int i = 0; i < a.length ; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                if (i != a.length -1 && j != a[0].length -1){
+                    if(a[i][j] == 1 && a[i][j] != a[i+1][j] && a[i][j] != a[i][j+1]){
+                        count++;
+                    }
+                }else if(i == a.length -1 && j == a[0].length-1){
+                    if(a[i][j] == 1 && a[i][j] != a[i-1][j] && a[i][j] != a[i][j-1]){
+                        count ++;
+                    }
+                }else if(i == a.length -1 && j != a[0].length-1){
+                    if(a[i][j] == 1 && a[i][j] != a[i-1][j] && a[i][j] != a[i][j+1]){
+                        count++;
+                    }
+
+                }else if(i != a.length -1 && j == a[0].length-1){
+                    if(a[i][j] == 1 && a[i][j] != a[i+1][j] && a[i][j] != a[i][j-1]){
+                        count++;
+                    }
+                }
+
+            }
+        }
+
+        for (int k = a.length - 1; k > 0 ; k--) {
+            for (int h = a[0].length - 1; h > 0; h--) {
+                if (k != 0 && h != 0){
+                    if(a[k][h] == 1 && a[k][h] != a[k-1][h] && a[k][h] != a[k][h -1]) {
+                        count++;
+                    }
+                }
+            }
+        }
+
+
+
+        return count;
+    }
+}
+
+/////
+ public static int getRectangleCount(byte[][] a) {
+        int count = 0;
+        int tmp = -1;
+        int jt = a[0].length;
+
+        boolean findRect = false;
+
+        while (tmp != count) { //если счётчик увеличился за проход по матрице - снова делаем проход по матрице
+            tmp = count;
+
+            outerloop:
+            for (int i = 0; i < a.length; i++) {
+                for (int j = 0; j < a[0].length; j++) {
+                    if (a[i][j] == 1 && !findRect) { //случай, когда встретили прямоугольник
+                        count++;
+                        jt = j; //запоминаем столбец, в котором начался прямоугольник
+                        findRect = true;
+                        a[i][j] = 0;
+                    }
+                    else if (a[i][j] == 1 && findRect) {//обнуляем, чтобы не мешался
+                        a[i][j] = 0;
+                    }
+                    else if (a[i][j] == 0 && findRect && j == jt) { //если элемент под прямоугольник равен 0 - он закончился
+                        break outerloop; //выходим из внешнего цикла
+                    }
+                    else if (a[i][j] == 0 && findRect && j > jt) { //если элемент справа от прямоугольника равен 0 - идем на след строку
+                        break;
+                    }
+                }
+            }
+            findRect = false;
+        }
+        return count;
+    }
+}
